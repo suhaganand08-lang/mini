@@ -18,8 +18,6 @@ const { notFound, errorHandler } = require('./middleware/errorHandler');
 
 const app = express();
 
-console.log('CORS_ORIGINS:', corsOrigins);
-
 app.disable('x-powered-by');
 app.set('trust proxy', 1);
 app.use(helmet({ crossOriginResourcePolicy: { policy: 'cross-origin' } }));
@@ -27,7 +25,7 @@ app.use(requestId);
 app.use(cors({
   origin: corsOrigins.length ? corsOrigins : true,
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'X-Request-Id'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Request-Id', 'X-Admin-Api-Key'],
 }));
 app.use(express.json({ limit: '100kb' }));
 app.use(morgan(environment === 'production' ? 'combined' : 'dev'));
